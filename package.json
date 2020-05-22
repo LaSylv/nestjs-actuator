@@ -8,13 +8,13 @@
     "type": "git",
     "url": "git+ssh://git@github.com/Glosur/nest-actuator.git"
   },
-  "author": "ivanvs <robince885@gmail.com>",
+  "author": "Glosur <s.blanc@hotmail.fr>",
   "license": "MIT",
   "keywords": [
+    "nest",
     "nestjs",
-    "status",
     "monitoring",
-    "node"
+    "spring-boot-admin"
   ],
   "dependencies": {
     "@nestjs/common": "7.0.13",

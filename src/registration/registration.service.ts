@@ -7,7 +7,6 @@ import {
 import { Cron } from "@nestjs/schedule";
 import { ConfigurationService } from "../configuration/configuration.service";
 
-
 /**
  * Expected data to register ti Spring Boot Admin
  * */

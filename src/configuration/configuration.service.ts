@@ -1,21 +1,14 @@
-import {
-  Inject,
-  Injectable
-} from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ACTUATOR_MODULE_OPTIONS } from "../actuator.constant";
-import {
-  ActuatorModuleOptions,
-} from "../actuator.module";
+import { ActuatorModuleOptions } from "../actuator.module";
 import * as os from "os";
 import { ApplicationConfig } from "@nestjs/core";
-import {ApplicationRegistration} from "../registration/registration.service";
-
+import { ApplicationRegistration } from "../registration/registration.service";
 
 interface ActuatorConfiguration {
   registration: ApplicationRegistration;
   adminUrl: string;
 }
-
 
 @Injectable()
 export class ConfigurationService {
