@@ -32,7 +32,7 @@ export class RegistrationService implements OnApplicationBootstrap {
     this.refreshRegistration();
   }
 
-  @Cron("*/10 * * * * *")
+  @Cron("* * * * * *")
   healthCheck() {
     this.refreshRegistration();
   }
