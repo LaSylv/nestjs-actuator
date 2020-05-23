@@ -47,13 +47,16 @@
     "typescript": "3.9.2"
   },
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage",
     "coveralls": "npm run coverage --coverageReporters=text-lcov | coveralls",
-    "test:watch": "jest --watch",
     "build": "rm -rf ./dist && tsc --declaration",
     "format": "prettier src/**/*.ts --ignore-path ./.prettierignore --write && git status",
-    "prepublish": "npm run format && npm run build"
+    "prepublish": "npm run format && npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "tslint-check": "node_modules/tslint/bin/tslint -config-prettier-check ./tslint.json"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -61,12 +64,12 @@
       "json",
       "ts"
     ],
-    "rootDir": "tests",
+    "rootDir": "src",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "./coverage",
+    "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
   "bugs": {

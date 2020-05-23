@@ -5,13 +5,11 @@ import {
   Injectable,
   Logger,
   OnApplicationBootstrap,
-  OnApplicationShutdown,
 } from "@nestjs/common";
 import { Cron } from "@nestjs/schedule";
 import { ACTUATOR_MODULE_OPTIONS } from "../actuator.constant";
 import { ActuatorModuleOptions } from "../actuator.module";
 import { ApplicationConfig } from "@nestjs/core";
-import * as os from "os";
 
 /**
  * Expected data to register ti Spring Boot Admin
@@ -53,11 +51,11 @@ export class RegistrationService
   }
 
   @Cron("0 * * * * *")
-  healthCheck() {
+  cronRegistration() {
     this.refreshRegistration();
   }
 
-  private refreshRegistration() {
+  refreshRegistration() {
     const applicationRegistration = this.computeRegistration();
     let adminServerUrl = this.options.registration.adminServerUrl;
     this.httpService
