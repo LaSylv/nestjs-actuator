@@ -7,4 +7,14 @@ steps:
     image: node:12
     commands:
       - npm install
-      - npm run test
+      - npm run test:cov
+      - npm run test:e2e
+  - name: coverage
+    image: plugins/codecov
+    settings:
+      token:
+        from_secret: CODECOV_TOKEN
+      files:
+        - '*.json'
+      paths:
+        - coverage
