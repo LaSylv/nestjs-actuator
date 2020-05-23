@@ -1,9 +1,11 @@
 import {
+  BeforeApplicationShutdown,
   HttpService,
   Inject,
   Injectable,
   Logger,
   OnApplicationBootstrap,
+  OnApplicationShutdown,
 } from "@nestjs/common";
 import { Cron } from "@nestjs/schedule";
 import { ACTUATOR_MODULE_OPTIONS } from "../actuator.constant";
@@ -24,7 +26,8 @@ export interface ApplicationRegistration {
 }
 
 @Injectable()
-export class RegistrationService implements OnApplicationBootstrap {
+export class RegistrationService
+  implements OnApplicationBootstrap, BeforeApplicationShutdown {
   private readonly logger = new Logger(RegistrationService.name);
 
   // Dirty however, DEFAULT scope make this work
@@ -36,6 +39,14 @@ export class RegistrationService implements OnApplicationBootstrap {
     private readonly applicationConfig: ApplicationConfig,
     private httpService: HttpService
   ) {}
+
+  beforeApplicationShutdown() {
+    let adminServerUrl = this.options.registration.adminServerUrl;
+
+    this.httpService.delete(
+      `${adminServerUrl}/instances/${this.registrationId}`
+    );
+  }
 
   onApplicationBootstrap() {
     this.refreshRegistration();
