@@ -1,4 +1,6 @@
-
+![npm](https://img.shields.io/npm/v/@glosur/nestjs-actuator)
+[![Build Status](https://cloud.drone.io/api/badges/Glosur/nestjs-actuator/status.svg?ref=refs/heads/master)](https://cloud.drone.io/Glosur/nestjs-actuator)
+[![codecov](https://codecov.io/gh/Glosur/nestjs-actuator/branch/master/graph/badge.svg)](https://codecov.io/gh/Glosur/nestjs-actuator)
 
 ## Description
 
