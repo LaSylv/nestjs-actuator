@@ -49,7 +49,7 @@
   },
   "scripts": {
     "coveralls": "npm run coverage --coverageReporters=text-lcov | coveralls",
-    "build": "rm -rf ./dist && tsc --declaration",
+    "build": "rm -rf ./dist && tsc --declaration -p tsconfig.build.json",
     "format": "prettier src/**/*.ts --ignore-path ./.prettierignore --write && git status",
     "prepublish": "npm run format && npm run build",
     "test": "jest",
