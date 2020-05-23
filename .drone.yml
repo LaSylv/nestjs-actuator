@@ -1,0 +1,10 @@
+kind: pipeline
+type: docker
+name: test
+
+steps:
+  - name: test
+    image: node:12
+    commands:
+      - npm install
+      - npm run test
