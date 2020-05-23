@@ -63,22 +63,11 @@ export class RegistrationService
       .toPromise()
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
-          const registrationId: string = response.data.id;
-          if (applicationRegistration.id === undefined) {
-            this.setRegistrationId(registrationId);
-            this.logger.log(
-              `Registered to [${adminServerUrl}] with id [${registrationId}]`
-            );
-          } else if (this.registrationId === registrationId) {
-            this.logger.debug(
-              `Refreshed registration to [${adminServerUrl}] with id [${registrationId}]`
-            );
-          } else {
-            this.logger.log(
-              `Refreshed registration to [${adminServerUrl}] and got new id [${registrationId}]`
-            );
-          }
-          this.setRegistrationId(response.data.id);
+          this.handleSuccessfullResponse(
+            response,
+            applicationRegistration,
+            adminServerUrl
+          );
         }
       })
       .catch((exception) => {
@@ -86,6 +75,29 @@ export class RegistrationService
           `Unable to register application to [${adminServerUrl}] due to [${exception}]`
         );
       });
+  }
+
+  private handleSuccessfullResponse(
+    response,
+    applicationRegistration: ApplicationRegistration,
+    adminServerUrl: string
+  ) {
+    const registrationId: string = response.data.id;
+    if (applicationRegistration.id === undefined) {
+      this.setRegistrationId(registrationId);
+      this.logger.log(
+        `Registered to [${adminServerUrl}] with id [${registrationId}]`
+      );
+    } else if (this.registrationId === registrationId) {
+      this.logger.debug(
+        `Refreshed registration to [${adminServerUrl}] with id [${registrationId}]`
+      );
+    } else {
+      this.logger.log(
+        `Refreshed registration to [${adminServerUrl}] and got new id [${registrationId}]`
+      );
+    }
+    this.setRegistrationId(response.data.id);
   }
 
   computeRegistration(): ApplicationRegistration {

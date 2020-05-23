@@ -11,9 +11,6 @@ import { DefaultHealthEndpoint } from "./endpoints/health/defaultHealth.endpoint
 import { ActuatorEndpoint } from "./endpoints/endpoint.interface";
 import { DefaultEnvEndpoint } from "./endpoints/health/defaultEnv.endpoint";
 import {Provider} from "@nestjs/common/interfaces/modules/provider.interface";
-const { TerminusModule } = optionalRequire("@nestjs/terminus", () =>
-  require("@nestjs/terminus")
-);
 
 export interface ActuatorModuleOptions {
   /**
@@ -40,9 +37,6 @@ export interface RegistrationOptions {
 export class ActuatorModule {
   static forRoot(options: ActuatorModuleOptions): DynamicModule {
     const optionalDependencies = [];
-    if (TerminusModule) {
-      optionalDependencies.push(TerminusModule);
-    }
 
     const endpointMap: Record<string, ActuatorEndpoint> = {
       health: ActuatorModule.getHealthEndpoint(),
