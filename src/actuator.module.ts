@@ -1,17 +1,14 @@
-import { DynamicModule, HttpModule } from "@nestjs/common";
-import {
-  ACTUATOR_ENDPOINTS,
-  ACTUATOR_MODULE_OPTIONS,
-} from "./actuator.constant";
-import { ScheduleModule } from "@nestjs/schedule";
-import { RegistrationService } from "./registration/registration.service";
-import { optionalRequire } from "@nestjs/core/helpers/optional-require";
-import { ActuatorController } from "./endpoints/actuator.controller";
-import { DefaultHealthEndpoint } from "./endpoints/health/defaultHealth.endpoint";
-import { ActuatorEndpoint } from "./endpoints/endpoint.interface";
-import { DefaultEnvEndpoint } from "./endpoints/health/defaultEnv.endpoint";
+import {DynamicModule, HttpModule} from "@nestjs/common";
+import {ACTUATOR_AVAILABLE_ENDPOINTS, ACTUATOR_MODULE_OPTIONS,} from "./actuator.constant";
+import {ScheduleModule} from "@nestjs/schedule";
+import {RegistrationService} from "./registration/registration.service";
+import {ActuatorController} from "./endpoints/actuator.controller";
 import {Provider} from "@nestjs/common/interfaces/modules/provider.interface";
 import {AxiosBasicCredentials} from "axios";
+import getHealthEndpoint from "./endpoints/health/health.provider";
+import getEnvEndpoint from "./endpoints/env/env.provider";
+import getInfoEndpoint from "./endpoints/info/info.provider";
+import getHttptraceEndpoint from "./endpoints/mappings/httptrace.provider";
 
 export interface ActuatorModuleOptions {
   /**
@@ -47,40 +44,27 @@ export interface RegistrationOptions {
 
 export class ActuatorModule {
   static forRoot(options: ActuatorModuleOptions): DynamicModule {
-    const optionalDependencies = [];
 
-    const endpointMap: Record<string, ActuatorEndpoint> = {
-      health: ActuatorModule.getHealthEndpoint(),
-      env: ActuatorModule.getEnvEndpoint(),
-    };
     let providers: Provider[] = [
       {
         provide: ACTUATOR_MODULE_OPTIONS,
         useValue: Object.assign({}, options),
       },
       {
-        provide: ACTUATOR_ENDPOINTS,
-        useValue: endpointMap,
+        provide: ACTUATOR_AVAILABLE_ENDPOINTS,
+        useValue: ["env", "info", "health", "httptrace"]
       }
     ];
+    providers.push(getHealthEndpoint(), getEnvEndpoint(), getInfoEndpoint(), ...getHttptraceEndpoint())
 
     if(options.registration) {
       providers.push(RegistrationService);
     }
-    const moduleForRoot: DynamicModule = {
+    return {
       module: ActuatorModule,
-      imports: [HttpModule, ScheduleModule.forRoot(), ...optionalDependencies],
+      imports: [HttpModule, ScheduleModule.forRoot()],
       controllers: [ActuatorController],
       providers: providers,
     };
-    return moduleForRoot;
-  }
-
-  private static getHealthEndpoint() {
-    return new DefaultHealthEndpoint();
-  }
-
-  private static getEnvEndpoint() {
-    return new DefaultEnvEndpoint();
   }
 }

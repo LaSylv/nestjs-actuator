@@ -1,0 +1,47 @@
+import { ActuatorModuleOptions } from "../../actuator.module";
+import { Test } from "@nestjs/testing";
+import { HttpModule } from "@nestjs/common";
+import { RegistrationService } from "../../registration/registration.service";
+import { ACTUATOR_MODULE_OPTIONS } from "../../actuator.constant";
+import {HttptraceRepository, InMemoryHttpTraceRepository} from "./httptrace.repository";
+
+describe("InMemoryHttpTraceRepository", function () {
+  let repository: HttptraceRepository;
+  beforeEach(async () => {
+    const module = await Test.createTestingModule({
+      providers: [
+        {
+          provide: HttptraceRepository,
+          useClass: InMemoryHttpTraceRepository,
+        },
+      ],
+    }).compile();
+    repository = module.get<HttptraceRepository>(HttptraceRepository);
+  });
+
+  it("should add element when first one", function () {
+    repository.addTrace({
+      request: {headers: undefined, method: "", uri: ""},
+      response: {headers: undefined, status: 0},
+      timeTaken: 0,
+      timestamp: 0
+    })
+
+    expect(repository.getTraces()).toHaveLength(1);
+  });
+
+
+  it("should never have more than 100 elements", function () {
+
+    for (let i = 0; i < 135; i++) {
+      repository.addTrace({
+        request: {headers: undefined, method: "", uri: ""},
+        response: {headers: undefined, status: 0},
+        timeTaken: 0,
+        timestamp: 0
+      })
+    }
+
+    expect(repository.getTraces()).toHaveLength(100);
+  });
+});

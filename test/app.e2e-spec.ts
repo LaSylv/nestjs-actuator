@@ -10,7 +10,6 @@ describe('AppController (e2e)', () => {
     beforeEach(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [ActuatorModule.forRoot({
-
             })],
         }).compile();
 
@@ -18,7 +17,35 @@ describe('AppController (e2e)', () => {
         await app.init();
     });
 
-    it('/ (GET)', () => {
-        return request(app.getHttpServer()).get('/actuator').expect(200);
+    it('/actuator (GET)', () => {
+        return request(app.getHttpServer()).get('/actuator').expect(200, {
+            _links: {
+                self: { href: '/', templated: false },
+                env: { href: '/env', templated: false },
+                info: { href: '/info', templated: false },
+                health: { href: '/health', templated: false },
+                httptrace: { href: '/httptrace', templated: false }
+            }
+        });
+    });
+
+    it('/actuator/non-existing (GET)', () => {
+        return request(app.getHttpServer()).get('/actuator/non-existing').expect(404 );
+    });
+
+    it('/actuator/env (GET)', () => {
+        return request(app.getHttpServer()).get('/actuator/env').expect(200 );
+    });
+
+    it('/actuator/httptrace (GET)', () => {
+        return request(app.getHttpServer()).get('/actuator/httptrace').expect(200 );
+    });
+
+    it('/actuator/health (GET)', () => {
+        return request(app.getHttpServer()).get('/actuator/health').expect(200 );
+    });
+
+    it('/actuator/info (GET)', () => {
+        return request(app.getHttpServer()).get('/actuator/info').expect(200 );
     });
 });
