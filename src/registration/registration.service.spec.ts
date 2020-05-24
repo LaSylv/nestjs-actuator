@@ -21,6 +21,9 @@ describe("Registration Service", () => {
           username: "username",
           password: "password",
         },
+        metadata: {
+          custom: "metadata",
+        },
       },
     };
     const module = await Test.createTestingModule({
@@ -127,9 +130,12 @@ describe("Registration Service", () => {
         .spyOn(httpService, "post")
         .mockImplementation(
           (path: string, body: any, config: AxiosRequestConfig) => {
+            console.log(body);
             expect(path).toEqual("serverUrl/instances");
-            expect(config.auth).not.toBeUndefined();
-            expect(body).not.toBeUndefined();
+            expect(config.auth).toBeDefined();
+            expect(body).toBeDefined();
+            expect(body.metadata.timestamp).toBeDefined();
+            expect(body.metadata.custom).toEqual("metadata");
             return of(okResponse);
           }
         );
