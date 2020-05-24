@@ -11,6 +11,7 @@ import { DefaultHealthEndpoint } from "./endpoints/health/defaultHealth.endpoint
 import { ActuatorEndpoint } from "./endpoints/endpoint.interface";
 import { DefaultEnvEndpoint } from "./endpoints/health/defaultEnv.endpoint";
 import {Provider} from "@nestjs/common/interfaces/modules/provider.interface";
+import {AxiosBasicCredentials} from "axios";
 
 export interface ActuatorModuleOptions {
   /**
@@ -32,6 +33,11 @@ export interface RegistrationOptions {
    * Url of your service. Should be accessible by the Spring Boot Admin Server
    */
   serviceUrl: string;
+
+  /**
+   * Authentication credentials using basic auth
+   */
+  auth?: AxiosBasicCredentials;
 }
 
 export class ActuatorModule {

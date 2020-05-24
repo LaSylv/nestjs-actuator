@@ -10,6 +10,7 @@ import { Cron } from "@nestjs/schedule";
 import { ACTUATOR_MODULE_OPTIONS } from "../actuator.constant";
 import { ActuatorModuleOptions } from "../actuator.module";
 import { ApplicationConfig } from "@nestjs/core";
+import { AxiosBasicCredentials } from "axios";
 
 /**
  * Expected data to register ti Spring Boot Admin
@@ -20,6 +21,7 @@ export interface ApplicationRegistration {
   healthUrl: string;
   serviceUrl: string;
   metadata: any;
+  auth?: AxiosBasicCredentials;
   id?: string;
 }
 
@@ -59,7 +61,9 @@ export class RegistrationService
     const applicationRegistration = this.computeRegistration();
     let adminServerUrl = this.options.registration.adminServerUrl;
     this.httpService
-      .post(adminServerUrl + "/instances", applicationRegistration)
+      .post(adminServerUrl + "/instances", applicationRegistration, {
+        auth: applicationRegistration.auth,
+      })
       .toPromise()
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
@@ -113,6 +117,7 @@ export class RegistrationService
       serviceUrl: serviceUrl,
       name: this.options.registration.name,
       id: this.registrationId,
+      auth: this.options.registration.auth,
       metadata: {
         timestamp: new Date().toISOString(),
         version: process.env.npm_package_version,
