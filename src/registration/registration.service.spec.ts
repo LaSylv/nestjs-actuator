@@ -1,5 +1,5 @@
 import { RegistrationService } from "./registration.service";
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test } from "@nestjs/testing";
 import { HttpModule, HttpService } from "@nestjs/common";
 import { ACTUATOR_MODULE_OPTIONS } from "../actuator.constant";
 import { ActuatorModuleOptions } from "../actuator.module";
@@ -130,7 +130,6 @@ describe("Registration Service", () => {
         .spyOn(httpService, "post")
         .mockImplementation(
           (path: string, body: any, config: AxiosRequestConfig) => {
-            console.log(body);
             expect(path).toEqual("serverUrl/instances");
             expect(config.auth).toBeDefined();
             expect(body).toBeDefined();

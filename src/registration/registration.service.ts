@@ -9,7 +9,6 @@ import {
 import { Cron } from "@nestjs/schedule";
 import { ACTUATOR_MODULE_OPTIONS } from "../actuator.constant";
 import { ActuatorModuleOptions } from "../actuator.module";
-import { ApplicationConfig } from "@nestjs/core";
 import { AxiosBasicCredentials } from "axios";
 
 /**
@@ -36,7 +35,6 @@ export class RegistrationService
   constructor(
     @Inject(ACTUATOR_MODULE_OPTIONS)
     private readonly options: ActuatorModuleOptions,
-    private readonly applicationConfig: ApplicationConfig,
     private httpService: HttpService
   ) {}
 

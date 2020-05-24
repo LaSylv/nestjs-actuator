@@ -65,6 +65,7 @@ export class ApplicationModule {}
 ### Supported SBA features
 * **Version:** Display the version of the app
 * **Environment:** Display environment variables (Hiding sensible ones)
+* **Http traces:** Display the last 100 http calls to your application
 
 More to come !
 
@@ -77,6 +78,11 @@ However make sure to make the Spring Boot Admin Server aware of those security c
 ## Compatibility version
 
 This module has only be tested againt NestJS 7+. It *might* work with lower versions.
+
+## Known caveats
+
+Due to how works interceptors in NestJS, some calls can't be seen in the Http Traces tab. Those calls are the one not mapped to any route.
+Also, exception filters getting triggered after interceptors means the status code can sometimee be missing
 
 ## License
 

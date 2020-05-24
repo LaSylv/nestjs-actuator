@@ -15,7 +15,7 @@ export class DefaultInfoEndpoint implements ActuatorEndpoint {
     return {
       build: {
         version: process.env.npm_package_version,
-        artifact: this.options.registration.name,
+        artifact: this.options.registration?.name,
       },
     };
   }
