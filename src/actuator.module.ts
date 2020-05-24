@@ -38,6 +38,11 @@ export interface RegistrationOptions {
    * Authentication credentials using basic auth
    */
   auth?: AxiosBasicCredentials;
+
+  /**
+   * Optional additional metadatas
+   */
+  metadata?: any;
 }
 
 export class ActuatorModule {

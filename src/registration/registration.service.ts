@@ -121,6 +121,7 @@ export class RegistrationService
       metadata: {
         timestamp: new Date().toISOString(),
         version: process.env.npm_package_version,
+        ...this.options.registration.metadata,
       },
     };
   }

@@ -53,7 +53,8 @@ import {ActuatorModule} from "./actuator.module";
                        auth: { // Optional, needed if you secured your Spring Boot Admin Server
                           "username": "username",
                           "password": "pwd"
-                       }
+                       },
+                       metadata: {} // Optional, additionals metadata
                    }
                 }),
     ]
