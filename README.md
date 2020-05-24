@@ -50,6 +50,10 @@ import {ActuatorModule} from "./actuator.module";
                        adminServerUrl: 'http://localhost:8080', // URL of the spring boot admin server
                        name: 'myApp', // Name of your app
                        serviceUrl: 'http://localhost:3000', // URL to register with to Spring Boot Admin. This is what Spring Boot Admin will try to call to fetch informations.
+                       auth: { // Optional, needed if you secured your Spring Boot Admin Server
+                          "username": "username",
+                          "password": "pwd"
+                       }
                    }
                 }),
     ]
