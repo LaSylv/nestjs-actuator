@@ -25,7 +25,7 @@ Nestjs-actuator is a [NestJS](https://nestjs.com/) module (Typescript) implement
 This project was inspired by [Pyctuator](https://github.com/SolarEdgeTech/pyctuator).
  
 This module aims to register and monitor NestJS application through [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin).
-However, this module can also be used just to exposed the endpoints provided.
+However, this module can also be used just to expose the endpoints provided.
 
 The project come with only one hard dependency, `@nestjs/schedule` which might be removed in the future.
 
@@ -69,13 +69,9 @@ This project does not provide any security on the exposed endpoints. Apply a mid
 However make sure to make the Spring Boot Admin Server aware of those security concerns through metadata.
 
 
-## TODO
+## Compatibility version
 
-- Add examples
-- Find a lightweight alternative to `@nestjs/schedule`
-- Tests
-- Add the possibility to use or not the global prefix (always used right now)
-- Add more endpoints
+This module has only be tested againt NestJS 7+. It *might* work with lower versions.
 
 ## License
 
