@@ -1,6 +1,6 @@
 {
   "name": "@glosur/nestjs-actuator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Integration with Spring Boot Admin for NestJS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
