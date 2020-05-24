@@ -1,7 +1,22 @@
-![npm](https://img.shields.io/npm/v/@glosur/nestjs-actuator)
-[![Build Status](https://cloud.drone.io/api/badges/Glosur/nestjs-actuator/status.svg?ref=refs/heads/master)](https://cloud.drone.io/Glosur/nestjs-actuator)
-[![Maintainability](https://api.codeclimate.com/v1/badges/b4a9985f26bfb6b4250d/maintainability)](https://codeclimate.com/github/Glosur/nestjs-actuator/maintainability)
-[![codecov](https://codecov.io/gh/Glosur/nestjs-actuator/branch/master/graph/badge.svg)](https://codecov.io/gh/Glosur/nestjs-actuator)
+
+<h1 align="center">Nestjs Actuator</h1>
+
+<p align="center">A module to monitor your <a href="https://github.com/nestjs/nest">Nestjs</a> applications.</p>
+<br/>
+<p align="center">
+    <img alt="GitHub" src="https://img.shields.io/github/license/glosur/nestjs-actuator">
+    <img alt="npm" src="https://img.shields.io/npm/v/@glosur/nestjs-actuator">
+    <a href="https://cloud.drone.io/Glosur/nestjs-actuator">
+        <img src="https://cloud.drone.io/api/badges/Glosur/nestjs-actuator/status.svg" />
+    </a>
+    <a href="https://codeclimate.com/github/Glosur/nestjs-actuator/maintainability">
+        <img src="https://api.codeclimate.com/v1/badges/b4a9985f26bfb6b4250d/maintainability" />
+    </a>
+    <a href="https://codecov.io/gh/Glosur/nestjs-actuator">
+      <img src="https://codecov.io/gh/Glosur/nestjs-actuator/branch/master/graph/badge.svg" />
+    </a>
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/glosur/nestjs-actuator">
+</p>
 
 ## Description
 
