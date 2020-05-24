@@ -5,7 +5,7 @@ import { ACTUATOR_MODULE_OPTIONS } from "../actuator.constant";
 import { ActuatorModuleOptions } from "../actuator.module";
 import { doesNotThrow } from "assert";
 import { of, throwError } from "rxjs";
-import {AxiosRequestConfig, AxiosResponse} from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 
 describe("Registration Service", () => {
   let service: RegistrationService;
@@ -19,8 +19,8 @@ describe("Registration Service", () => {
         name: "appName",
         auth: {
           username: "username",
-          password: "password"
-        }
+          password: "password",
+        },
       },
     };
     const module = await Test.createTestingModule({
@@ -125,12 +125,14 @@ describe("Registration Service", () => {
 
       const spyInstance = jest
         .spyOn(httpService, "post")
-        .mockImplementation((path: string, body: any, config: AxiosRequestConfig) => {
-          expect(path).toEqual("serverUrl/instances");
-          expect(config.auth).not.toBeUndefined();
-          expect(body).not.toBeUndefined();
-          return of(okResponse);
-        });
+        .mockImplementation(
+          (path: string, body: any, config: AxiosRequestConfig) => {
+            expect(path).toEqual("serverUrl/instances");
+            expect(config.auth).not.toBeUndefined();
+            expect(body).not.toBeUndefined();
+            return of(okResponse);
+          }
+        );
       service.refreshRegistration();
       expect(spyInstance).toHaveBeenCalledTimes(1);
     });
