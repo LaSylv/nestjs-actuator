@@ -2,8 +2,13 @@ import { ActuatorEndpoint } from "../endpoint.interface";
 
 const scrubbingRegex = /^.*key.*|.*secret.*|.*password.*|.*token.*/;
 
-export class DefaultEnvEndpoint implements ActuatorEndpoint {
-  compute(): any {
+type Environment = {
+  activeProfiles: string[];
+  propertySources: { name: string; properties: Record<string, unknown> }[];
+};
+
+export class DefaultEnvEndpoint implements ActuatorEndpoint<Environment> {
+  compute(): Environment {
     const properties = {};
     Object.keys(process.env).forEach((key) => {
       properties[key] = {

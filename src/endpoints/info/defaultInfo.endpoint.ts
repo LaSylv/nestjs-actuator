@@ -3,15 +3,14 @@ import { Inject } from "@nestjs/common";
 import { ACTUATOR_MODULE_OPTIONS } from "../../actuator.constant";
 import { ActuatorModuleOptions } from "../../actuator.module";
 
-const scrubbingRegex = /^.*key.*|.*secret.*|.*password.*|.*token.*/;
-
-export class DefaultInfoEndpoint implements ActuatorEndpoint {
+type Info = { build: { version: string; artifact: string } };
+export class DefaultInfoEndpoint implements ActuatorEndpoint<Info> {
   constructor(
     @Inject(ACTUATOR_MODULE_OPTIONS)
     private readonly options: ActuatorModuleOptions
   ) {}
 
-  compute(): any {
+  compute(): Info {
     return {
       build: {
         version: process.env.npm_package_version,

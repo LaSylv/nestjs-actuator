@@ -7,6 +7,7 @@ steps:
     image: node:12
     commands:
       - npm install
+      - npm run lint
       - npm run test:cov
       - npm run test:e2e
   - name: coverage
