@@ -1,10 +1,13 @@
-import {DynamicModule, HttpModule} from "@nestjs/common";
-import {ACTUATOR_AVAILABLE_ENDPOINTS, ACTUATOR_MODULE_OPTIONS,} from "./actuator.constant";
-import {ScheduleModule} from "@nestjs/schedule";
-import {RegistrationService} from "./registration/registration.service";
-import {ActuatorController} from "./endpoints/actuator.controller";
-import {Provider} from "@nestjs/common/interfaces/modules/provider.interface";
-import {AxiosBasicCredentials} from "axios";
+import { DynamicModule, HttpModule } from "@nestjs/common";
+import {
+  ACTUATOR_AVAILABLE_ENDPOINTS,
+  ACTUATOR_MODULE_OPTIONS,
+} from "./actuator.constant";
+import { ScheduleModule } from "@nestjs/schedule";
+import { RegistrationService } from "./registration/registration.service";
+import { ActuatorController } from "./endpoints/actuator.controller";
+import { Provider } from "@nestjs/common/interfaces/modules/provider.interface";
+import { AxiosBasicCredentials } from "axios";
 import getHealthEndpoint from "./endpoints/health/health.provider";
 import getEnvEndpoint from "./endpoints/env/env.provider";
 import getInfoEndpoint from "./endpoints/info/info.provider";
@@ -39,25 +42,29 @@ export interface RegistrationOptions {
   /**
    * Optional additional metadatas
    */
-  metadata?: any;
+  metadata?: Record<string, unknown>;
 }
 
 export class ActuatorModule {
   static forRoot(options: ActuatorModuleOptions): DynamicModule {
-
-    let providers: Provider[] = [
+    const providers: Provider[] = [
       {
         provide: ACTUATOR_MODULE_OPTIONS,
         useValue: Object.assign({}, options),
       },
       {
         provide: ACTUATOR_AVAILABLE_ENDPOINTS,
-        useValue: ["env", "info", "health", "httptrace"]
-      }
+        useValue: ["env", "info", "health", "httptrace"],
+      },
     ];
-    providers.push(getHealthEndpoint(), getEnvEndpoint(), getInfoEndpoint(), ...getHttptraceEndpoint())
+    providers.push(
+      getHealthEndpoint(),
+      getEnvEndpoint(),
+      getInfoEndpoint(),
+      ...getHttptraceEndpoint()
+    );
 
-    if(options.registration) {
+    if (options.registration) {
       providers.push(RegistrationService);
     }
     return {

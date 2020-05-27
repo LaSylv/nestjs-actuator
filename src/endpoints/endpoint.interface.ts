@@ -1,3 +1,3 @@
-export interface ActuatorEndpoint {
-  compute(): any;
+export interface ActuatorEndpoint<T> {
+  compute(): T;
 }

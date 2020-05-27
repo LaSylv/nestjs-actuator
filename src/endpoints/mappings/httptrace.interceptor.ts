@@ -9,8 +9,6 @@ import { Observable, throwError } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
 import { IncomingMessage, ServerResponse } from "http";
 import { HttptraceRepository } from "./httptrace.repository";
-import { HttpAdapterHost } from "@nestjs/core";
-import { ExpressAdapter } from "@nestjs/platform-express";
 
 interface HttpTrace {
   request: {
@@ -23,16 +21,14 @@ interface HttpTrace {
   timestamp: number;
 }
 
-const MAX_IN_MEMORY_HTTP_TRACE = 100;
-
 @Injectable()
 export class HttptraceInterceptor implements NestInterceptor {
   constructor(private traceRepository: HttptraceRepository) {}
 
   intercept(
     context: ExecutionContext,
-    call$: CallHandler<any>
-  ): Observable<any> {
+    call$: CallHandler
+  ): Observable<unknown> {
     const now = Date.now();
     return call$.handle().pipe(
       tap(() => {
@@ -49,10 +45,8 @@ export class HttptraceInterceptor implements NestInterceptor {
     context: ExecutionContext,
     incomingTime: number,
     error?: Error
-  ) {
+  ): void {
     const request = context.switchToHttp().getRequest();
-    const method = request.method;
-    const url = request.originalUrl;
     const delay = Date.now() - incomingTime;
 
     const response = context.switchToHttp().getResponse();
@@ -76,11 +70,11 @@ export class HttptraceInterceptor implements NestInterceptor {
       this.traceRepository.addTrace(currentTrace);
     }
   }
-  
+
   private static getResponseStatus(error: Error, response: ServerResponse) {
     return error
-        ? HttptraceInterceptor.getErrorCode(error)
-        : response.statusCode;
+      ? HttptraceInterceptor.getErrorCode(error)
+      : response.statusCode;
   }
 
   /**

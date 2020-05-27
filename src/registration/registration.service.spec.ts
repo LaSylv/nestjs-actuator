@@ -12,7 +12,7 @@ describe("Registration Service", () => {
   let httpService: HttpService;
 
   beforeEach(async () => {
-    let configuration: ActuatorModuleOptions = {
+    const configuration: ActuatorModuleOptions = {
       registration: {
         serviceUrl: "serviceUrl",
         adminServerUrl: "serverUrl",
@@ -45,17 +45,17 @@ describe("Registration Service", () => {
   });
 
   it("should register on startup", () => {
-    const spyInstance = jest
-      .spyOn(service, "refreshRegistration")
-      .mockImplementation(() => {});
+    jest.spyOn(service, "refreshRegistration").mockImplementation(() => {
+      return null;
+    });
     service.onApplicationBootstrap();
     expect(service.refreshRegistration).toHaveBeenCalledTimes(1);
   });
 
   it("should register on schedule", () => {
-    const spyInstance = jest
-      .spyOn(service, "refreshRegistration")
-      .mockImplementation(() => {});
+    jest.spyOn(service, "refreshRegistration").mockImplementation(() => {
+      return null;
+    });
     service.cronRegistration();
     expect(service.refreshRegistration).toHaveBeenCalledTimes(1);
   });
@@ -109,11 +109,9 @@ describe("Registration Service", () => {
 
   describe("refreshRegistration", function () {
     it("should not throw exception to not stop cron/fail startup", function () {
-      const spyInstance = jest
-        .spyOn(httpService, "post")
-        .mockImplementation(() => {
-          return throwError("Unexpected failure");
-        });
+      jest.spyOn(httpService, "post").mockImplementation(() => {
+        return throwError("Unexpected failure");
+      });
       doesNotThrow(() => service.refreshRegistration());
     });
 
@@ -129,7 +127,11 @@ describe("Registration Service", () => {
       const spyInstance = jest
         .spyOn(httpService, "post")
         .mockImplementation(
-          (path: string, body: any, config: AxiosRequestConfig) => {
+          (
+            path: string,
+            body: Record<string, Record<string, unknown>>,
+            config: AxiosRequestConfig
+          ) => {
             expect(path).toEqual("serverUrl/instances");
             expect(config.auth).toBeDefined();
             expect(body).toBeDefined();

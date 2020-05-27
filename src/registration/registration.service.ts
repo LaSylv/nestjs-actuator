@@ -19,7 +19,7 @@ export interface ApplicationRegistration {
   managementUrl: string;
   healthUrl: string;
   serviceUrl: string;
-  metadata: any;
+  metadata: Record<string, unknown>;
   auth?: AxiosBasicCredentials;
   id?: string;
 }
@@ -38,26 +38,26 @@ export class RegistrationService
     private httpService: HttpService
   ) {}
 
-  beforeApplicationShutdown() {
-    let adminServerUrl = this.options.registration.adminServerUrl;
+  beforeApplicationShutdown(): void {
+    const adminServerUrl = this.options.registration.adminServerUrl;
 
     this.httpService.delete(
       `${adminServerUrl}/instances/${this.registrationId}`
     );
   }
 
-  onApplicationBootstrap() {
+  onApplicationBootstrap(): void {
     this.refreshRegistration();
   }
 
   @Cron("0 * * * * *")
-  cronRegistration() {
+  cronRegistration(): void {
     this.refreshRegistration();
   }
 
-  refreshRegistration() {
+  refreshRegistration(): void {
     const applicationRegistration = this.computeRegistration();
-    let adminServerUrl = this.options.registration.adminServerUrl;
+    const adminServerUrl = this.options.registration.adminServerUrl;
     this.httpService
       .post(adminServerUrl + "/instances", applicationRegistration, {
         auth: applicationRegistration.auth,
@@ -108,7 +108,6 @@ export class RegistrationService
     }
     const serviceUrl = this.options.registration.serviceUrl;
 
-    const appVersion = process.env.npm_package_version;
     return {
       managementUrl: serviceUrl + "/actuator",
       healthUrl: serviceUrl + "/actuator/health",
@@ -124,7 +123,7 @@ export class RegistrationService
     };
   }
 
-  public setRegistrationId(id: string) {
+  public setRegistrationId(id: string): void {
     this.registrationId = id;
   }
 }

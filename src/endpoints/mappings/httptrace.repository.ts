@@ -1,13 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { OutgoingHttpHeaders } from "http";
-import { IncomingHttpHeaders } from "http";
-
-interface HttpTrace {
-  request: { headers: IncomingHttpHeaders; method: string; uri: string };
-  response: { headers: OutgoingHttpHeaders; status: number };
-  timeTaken: number;
-  timestamp: number;
-}
+import { HttpTrace } from "./defaultHttptrace.endpoint";
 
 const MAX_IN_MEMORY_HTTP_TRACE = 100;
 
@@ -21,9 +13,9 @@ export abstract class HttptraceRepository {
  */
 @Injectable()
 export class InMemoryHttpTraceRepository implements HttptraceRepository {
-  private traces: any[] = [];
+  private traces: HttpTrace[] = [];
 
-  addTrace(trace: HttpTrace) {
+  addTrace(trace: HttpTrace): void {
     this.traces.push(trace);
     if (this.traces.length > MAX_IN_MEMORY_HTTP_TRACE) {
       this.traces.shift();

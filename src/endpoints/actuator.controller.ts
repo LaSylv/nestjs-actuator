@@ -16,6 +16,8 @@ import { ActuatorEndpoint } from "./endpoint.interface";
 import { ActuatorModuleOptions } from "../actuator.module";
 import { ModuleRef } from "@nestjs/core";
 
+type ActiveLinks = { _links: { self: { templated: boolean; href: string } } };
+
 @Controller("actuator")
 @Injectable()
 export class ActuatorController {
@@ -29,27 +31,28 @@ export class ActuatorController {
 
   @Get()
   @Header("Content-Type", "application/vnd.spring-boot.actuator.v2+json")
-  root(): any {
+  root(): ActiveLinks {
     return this.getActiveLinks();
   }
 
   @Get(":key")
   @Header("Content-Type", "application/vnd.spring-boot.actuator.v2+json")
-  findOne(@Param("key") key): any {
+  findOne(@Param("key") key: string): unknown {
     if (!this.availableEndpoints.includes(key)) {
       throw new HttpException(`Endpoint [${key}] is not configured`, 404);
     }
-    const actuatorEndpoint = this.moduleRef.get<string, ActuatorEndpoint>(
-      ACTUATOR_ENDPOINT_PREFIX + key
-    );
+    const actuatorEndpoint = this.moduleRef.get<
+      string,
+      ActuatorEndpoint<unknown>
+    >(ACTUATOR_ENDPOINT_PREFIX + key);
     return actuatorEndpoint.compute();
   }
 
-  private getActiveLinks(): any {
+  private getActiveLinks(): ActiveLinks {
     const managementUrl = this.options.registration
       ? this.options.registration.serviceUrl + "actuator/"
       : "/";
-    const returnValue = {
+    const returnValue: ActiveLinks = {
       _links: {
         self: {
           href: managementUrl,
