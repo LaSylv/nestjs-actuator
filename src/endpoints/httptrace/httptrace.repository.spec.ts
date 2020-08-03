@@ -4,6 +4,15 @@ import {
   InMemoryHttpTraceRepository,
 } from "./httptrace.repository";
 
+function getDefaultTrace() {
+  return {
+    request: {headers: undefined, method: "", uri: ""},
+    response: {headers: undefined, status: 0},
+    timeTaken: 0,
+    timestamp: 0,
+  };
+}
+
 describe("InMemoryHttpTraceRepository", function () {
   let repository: HttptraceRepository;
   beforeEach(async () => {
@@ -19,12 +28,7 @@ describe("InMemoryHttpTraceRepository", function () {
   });
 
   it("should add element when first one", function () {
-    repository.addTrace({
-      request: { headers: undefined, method: "", uri: "" },
-      response: { headers: undefined, status: 0 },
-      timeTaken: 0,
-      timestamp: 0,
-    });
+    repository.addTrace(getDefaultTrace());
 
     expect(repository.getTraces()).toHaveLength(1);
   });

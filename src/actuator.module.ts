@@ -11,7 +11,8 @@ import { AxiosBasicCredentials } from "axios";
 import getHealthEndpoint from "./endpoints/health/health.provider";
 import getEnvEndpoint from "./endpoints/env/env.provider";
 import getInfoEndpoint from "./endpoints/info/info.provider";
-import getHttptraceEndpoint from "./endpoints/mappings/httptrace.provider";
+import getHttptraceEndpoint from "./endpoints/httptrace/httptrace.provider";
+import getBeansEndpoint from "./endpoints/beans/beans.provider";
 
 export interface ActuatorModuleOptions {
   /**
@@ -54,13 +55,14 @@ export class ActuatorModule {
       },
       {
         provide: ACTUATOR_AVAILABLE_ENDPOINTS,
-        useValue: ["env", "info", "health", "httptrace"],
+        useValue: ["env", "info", "health", "httptrace", "beans"],
       },
     ];
     providers.push(
       getHealthEndpoint(),
       getEnvEndpoint(),
       getInfoEndpoint(),
+      getBeansEndpoint(),
       ...getHttptraceEndpoint()
     );
 
