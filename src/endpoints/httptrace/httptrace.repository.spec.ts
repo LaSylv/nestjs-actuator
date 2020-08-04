@@ -6,8 +6,8 @@ import {
 
 function getDefaultTrace() {
   return {
-    request: {headers: undefined, method: "", uri: ""},
-    response: {headers: undefined, status: 0},
+    request: { headers: undefined, method: "", uri: "" },
+    response: { headers: undefined, status: 0 },
     timeTaken: 0,
     timestamp: 0,
   };
