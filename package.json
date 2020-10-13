@@ -43,7 +43,7 @@
     "reflect-metadata": "0.1.13",
     "supertest": "5.0.0",
     "ts-jest": "26.4.1",
-    "ts-loader": "8.0.4",
+    "ts-loader": "8.0.5",
     "ts-node": "9.0.0",
     "tsconfig-paths": "3.9.0",
     "typescript": "3.9.2"
