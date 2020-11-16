@@ -22,7 +22,7 @@
     "@nestjs/schedule": "^0.4.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "7.5.2",
+    "@nestjs/cli": "7.5.3",
     "@nestjs/platform-express": "7.5.2",
     "@nestjs/schematics": "7.2.2",
     "@nestjs/terminus": "7.0.1",
