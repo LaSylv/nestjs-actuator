@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: test
-    image: node:12
+    image: node:16
     commands:
       - npm install
       - npm run lint
